@@ -1,0 +1,620 @@
+﻿<Window
+  x:Class="WordAssistedTools.Views.UserSettings"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:converters="clr-namespace:WordAssistedTools.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:hc="https://handyorg.github.io/handycontrol"
+  xmlns:local="clr-namespace:WordAssistedTools.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:models="clr-namespace:WordAssistedTools.Models"
+  xmlns:properties="clr-namespace:WordAssistedTools.Properties"
+  xmlns:vm="clr-namespace:WordAssistedTools.ViewModels"
+  Name="SettingWindow"
+  Title="默认设置"
+  d:DataContext="{d:DesignInstance vm:UserSettingsViewModel,
+                                   IsDesignTimeCreatable=True}"
+  ResizeMode="NoResize"
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterScreen"
+  mc:Ignorable="d">
+  <Window.Resources>
+    <ResourceDictionary>
+      <converters:BoolToOnOffStateConverter x:Key="BoolToOnOffStateConverter" />
+      <converters:ComparisonConverter x:Key="ComparisonConverter" />
+      <Style BasedOn="{StaticResource ComboBoxBaseStyle}" TargetType="ComboBox">
+        <Setter Property="Width" Value="100" />
+      </Style>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+  <Grid
+    Width="Auto"
+    Height="Auto"
+    Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <TabControl
+      Grid.Row="0"
+      Width="800"
+      Height="700"
+      TabStripPlacement="Left">
+      <TabItem
+        Width="100"
+        Height="50"
+        FontSize="14"
+        Header="Pre工具">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <GroupBox
+              FontSize="13"
+              Header="时间自动规划"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="限制总时间(分钟)" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="选择汇报或答辩的上限时间" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="70"
+                      IsEditable="True"
+                      ItemsSource="{x:Static models:Shared.UpperLimitTimes}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=UpperLimitTime}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="时间余量(秒)" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="选择余留的时间，总时间减去余留时间为实际汇报或答辩的时间。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="70"
+                      IsEditable="True"
+                      ItemsSource="{x:Static models:Shared.FinalReservedTimes}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=FinalReservedTime}" />
+                  </Grid>
+                </hc:Card>
+                <!--<ui:CardControl Margin="0,8,0,0" Icon="Timer324">-->
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="切片时间(秒)" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="选择每次切换幻灯片时的时间，这也视为任意两个段落之间的停顿时间。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="70"
+                      IsEditable="True"
+                      ItemsSource="{x:Static models:Shared.ChangeSlideTimes}"
+                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=ChangeSlideTime}" />
+                  </Grid>
+
+                </hc:Card>
+              </StackPanel>
+            </GroupBox>
+            <GroupBox
+              Margin="0,5,0,0"
+              FontSize="13"
+              Header="导出PPT"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                      Grid.Column="0"
+                      Width="560"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="导出PPT命名习惯" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="12"
+                        Foreground="Gray"
+                        Text="设置从Word文档到导出PPT的命名习惯，使导出时能自动检测PPT文件。使用&lt;&gt;-/分别表示左增加、右增加、删除和替换，使用:分隔操作和关键字，使用*分隔多个步骤的关键字，使用/分割替换词，使用|分割多条规则，忽略扩展名。例如：Word名为《测试Word-讲稿.docx》，PPT名为《新的测试PPT.pptx》，此时填写&quot;&lt;-/:新的*-讲稿*Word/PPT&quot;。"
+                        TextWrapping="Wrap" />
+                      <TextBox Margin="0,10,0,0" Text="{Binding Source={x:Static properties:Settings.Default}, Path=WordToPptRules}" />
+                    </StackPanel>
+                    <Button
+                      Grid.Column="2"
+                      Width="70"
+                      Command="{Binding TryParseWordToPptRulesCommand}"
+                      Content="解析" />
+                  </Grid>
+                </hc:Card>
+                <!--<ui:CardControl Margin="0,8,0,0" Icon="FlashAuto20">-->
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="浏览后自动加载" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="12"
+                        Foreground="Gray"
+                        Text="在选择导出的PPT文件后自动加载备注。" />
+                    </StackPanel>
+                    <CheckBox
+                      Grid.Column="2"
+                      Content="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked, Converter={StaticResource BoolToOnOffStateConverter}}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=IsAutoLoadAfterBrowse}"
+                      Style="{StaticResource ToggleButtonSwitch}" />
+                  </Grid>
+                </hc:Card>
+                <!--<hc:Card Margin="0,8,0,0" Icon="TextColumnTwo20">-->
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="显示差异" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="12"
+                        Foreground="Gray"
+                        Text="在加载完PPT备注后自动显示差异。" />
+                    </StackPanel>
+                    <CheckBox
+                      Grid.Column="2"
+                      Content="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked, Converter={StaticResource BoolToOnOffStateConverter}}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=IsAutoShowDifferAfterLoad}"
+                      Style="{StaticResource ToggleButtonSwitch}" />
+                  </Grid>
+                </hc:Card>
+                <!--<ui:CardControl Margin="0,8,0,0" Icon="VirtualNetwork20">-->
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="差异类型" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="12"
+                        Foreground="Gray"
+                        Text="选择显示仅文本差异或文本与时间差异。" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                      <RadioButton Content="仅文本差异" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=DifferenceType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static models:DifferenceType.OnlyText}}" />
+                      <RadioButton
+                        Margin="20,0,0,0"
+                        Content="文本与时间差异"
+                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=DifferenceType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static models:DifferenceType.TimeAndText}}" />
+                    </StackPanel>
+                  </Grid>
+                </hc:Card>
+              </StackPanel>
+            </GroupBox>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem
+        Width="100"
+        Height="50"
+        FontSize="14"
+        Header="翻译">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <GroupBox
+              FontSize="13"
+              Header="网页设置"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="网页缩放比例%" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置侧边栏网页的缩放比例。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      IsEditable="True"
+                      ItemsSource="{x:Static models:Shared.WebScaleItems}"
+                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=TransWebScale}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="默认使用网站" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置默认使用的翻译网站" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="150"
+                      IsEditable="False"
+                      ItemsSource="{Binding TransWebNames}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=TransWebName}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="详细网站信息配置" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置可供使用的翻译网站名及链接" />
+                    </StackPanel>
+                    <Button
+                      Grid.Column="2"
+                      Command="{Binding ConfigTransWebCommand}"
+                      Content="配置信息" />
+                  </Grid>
+                </hc:Card>
+              </StackPanel>
+            </GroupBox>
+            <GroupBox
+              FontSize="13"
+              Header="API设置"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="任务超时（秒）" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置请求API的最大等待时间。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      ItemsSource="{x:Static models:Shared.TimeOutSecondsItems}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=TransApiTimeoutSecond}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="默认API" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="选择默认使用的API" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="150"
+                      ItemsSource="{Binding TransApiNames}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=TransApiName}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="详细网站信息配置" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置可供使用的API信息" />
+                    </StackPanel>
+                    <Button
+                      Grid.Column="2"
+                      Command="{Binding ConfigTransApiCommand}"
+                      Content="配置信息" />
+                  </Grid>
+                </hc:Card>
+
+              </StackPanel>
+            </GroupBox>
+
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+
+      <TabItem
+        Width="100"
+        Height="50"
+        FontSize="14"
+        Header="AI">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <GroupBox
+              FontSize="13"
+              Header="网页版设置"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="网页缩放比例%" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置侧边栏网页的缩放比例。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      ItemsSource="{x:Static models:Shared.WebScaleItems}"
+                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=GptWebScale}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="默认使用网站" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置默认使用的网页版AI。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="150"
+                      IsEditable="False"
+                      ItemsSource="{Binding GptWebNames}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=GptWebName}" />
+                  </Grid>
+                </hc:Card>
+
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="详细网站信息配置" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置可供使用的AI网站名及链接" />
+                    </StackPanel>
+                    <Button
+                      Grid.Column="2"
+                      Command="{Binding ConfigGptWebCommand}"
+                      Content="配置信息" />
+                  </Grid>
+                </hc:Card>
+              </StackPanel>
+            </GroupBox>
+            <GroupBox
+              FontSize="13"
+              Header="API设置"
+              Style="{StaticResource GroupBoxOriginal}">
+              <StackPanel Margin="5,0">
+                <hc:Card>
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="任务超时（秒）" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置请求API的最大等待时间。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      ItemsSource="{x:Static models:Shared.TimeOutSecondsItems}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=GptApiTimeoutSecond}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="默认API" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="选择默认使用的API" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      Width="150"
+                      ItemsSource="{Binding GptApiNames}"
+                      SelectedItem="{Binding Source={x:Static properties:Settings.Default}, Path=GptApiName}" />
+                  </Grid>
+                </hc:Card>
+                <!--<ui:CardControl Margin="0,8,0,0" Icon="Timer324">-->
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="详细网站信息配置" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置可供使用的API信息" />
+                    </StackPanel>
+                    <Button
+                      Grid.Column="2"
+                      Command="{Binding ConfigGptApiCommand}"
+                      Content="配置信息" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="流式传输" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        FontSize="12"
+                        Foreground="Gray"
+                        Text="启用后请求结果将像网页端一样逐步呈现。" />
+                    </StackPanel>
+                    <CheckBox
+                      Grid.Column="2"
+                      Content="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked, Converter={StaticResource BoolToOnOffStateConverter}}"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=GptApiStreamingMode}"
+                      Style="{StaticResource ToggleButtonSwitch}" />
+                  </Grid>
+                </hc:Card>
+                <hc:Card Margin="0,8,0,0">
+                  <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <TextBlock FontSize="13" Text="记忆对话轮数" />
+                      <TextBlock
+                        Margin="0,5,0,0"
+                        Foreground="Gray"
+                        Text="设置使用的最大历史对话轮数，负数表示记忆全部。" />
+                    </StackPanel>
+                    <ComboBox
+                      Grid.Column="2"
+                      IsEditable="True"
+                      ItemsSource="{x:Static models:Shared.HistoryNumItems}"
+                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=GptApiHistoryNum}" />
+                  </Grid>
+                </hc:Card>
+
+              </StackPanel>
+            </GroupBox>
+
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+    <Grid Grid.Row="1" Margin="0,10,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Button
+        Grid.Column="0"
+        Width="100"
+        Command="{Binding RestoreCommand}"
+        Content="恢复默认" />
+      <Button
+        Grid.Column="2"
+        Width="80"
+        Margin="15,0"
+        Command="{Binding ConfirmCommand}"
+        CommandParameter="{Binding ElementName=SettingWindow}"
+        Content="确定" />
+      <Button
+        Grid.Column="3"
+        Width="80"
+        Content="取消">
+        <b:Interaction.Triggers>
+          <b:EventTrigger EventName="Click">
+            <b:CallMethodAction MethodName="Close" TargetObject="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+          </b:EventTrigger>
+        </b:Interaction.Triggers>
+      </Button>
+    </Grid>
+
+  </Grid>
+
+</Window>

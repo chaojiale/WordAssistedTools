@@ -1,0 +1,84 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WordAssistedTools.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UpperLimitTime" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="FinalReservedTime" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="ChangeSlideTime" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="IsAutoLoadAfterBrowse" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IsAutoShowDifferAfterLoad" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DifferenceType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OnlyText</Value>
+    </Setting>
+    <Setting Name="WordToPptRules" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-:-讲稿</Value>
+    </Setting>
+    <Setting Name="UseLocalData" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ChatWaitTimeSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="MaximumQuantity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="GptWebName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GptApiName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GptApiIsRemoveEmptyLine" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GptWebScale" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="GptApiTimeoutSecond" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="TransWebScale" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="TransWebName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TransApiName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TransApiAutoUpdate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TransApiTimeoutSecond" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="GptApiTemplateName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">自由输入</Value>
+    </Setting>
+    <Setting Name="GptApiStreamingMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GptApiHistoryNum" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="TransApiIsAutoTranslate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TransApiSourceLan" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
+    </Setting>
+    <Setting Name="TransApiTargetLan" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Chinese</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

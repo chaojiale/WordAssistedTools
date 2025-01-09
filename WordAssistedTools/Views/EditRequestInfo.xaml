@@ -1,0 +1,156 @@
+﻿<UserControl
+  x:Class="WordAssistedTools.Views.EditRequestInfo"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:converters="clr-namespace:WordAssistedTools.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:WordAssistedTools.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:model="clr-namespace:WordAssistedTools.Models"
+  xmlns:vm="clr-namespace:WordAssistedTools.ViewModels"
+  Name="EditWindow"
+  MinWidth="400"
+  MinHeight="600"
+  HorizontalAlignment="Stretch"
+  VerticalAlignment="Stretch"
+  d:Background="White"
+  d:DataContext="{d:DesignInstance vm:EditRequestInfoViewModel,
+                                   IsDesignTimeCreatable=True}"
+  mc:Ignorable="d">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:ComparisonConverter x:Key="ComparisonConverter" />
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <b:Interaction.Triggers>
+    <b:EventTrigger EventName="Loaded">
+      <b:InvokeCommandAction Command="{Binding ControlLoadedCommand}" />
+    </b:EventTrigger>
+  </b:Interaction.Triggers>
+  <UserControl.DataContext>
+    <vm:EditRequestInfoViewModel />
+  </UserControl.DataContext>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="3*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <TextBlock Margin="0,5" Text="选择模板" />
+    <ScrollViewer
+      Grid.Row="1"
+      MinHeight="60"
+      MaxHeight="100"
+      VerticalScrollBarVisibility="Auto">
+      <ItemsControl VerticalAlignment="Stretch" ItemsSource="{Binding QuestionTemplateItems}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <RadioButton
+              Margin="0,5,15,5"
+              Content="{Binding Name}"
+              GroupName="Questions"
+              IsChecked="{Binding IsChecked}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+    <StackPanel
+      Grid.Row="2"
+      Margin="0,5,0,0"
+      HorizontalAlignment="Right"
+      Orientation="Horizontal">
+      <Button
+        Margin="8,0"
+        Command="{Binding LoadTemplatesCommand}"
+        Content="加载模板" />
+      <Button Command="{Binding EditTemplatesCommand}" Content="编辑模板" />
+    </StackPanel>
+    <TextBlock
+      Grid.Row="3"
+      Margin="0,5"
+      Text="$$$ 参考段落" />
+    <StackPanel
+      Grid.Row="4"
+      Margin="0,5"
+      Orientation="Horizontal">
+      <RadioButton Content="无" IsChecked="{Binding Path=ReferenceTarget, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static model:ReferenceType.None}}" />
+      <RadioButton
+        Margin="20,0"
+        Content="选择文本"
+        IsChecked="{Binding Path=ReferenceTarget, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static model:ReferenceType.Selected}}" />
+      <RadioButton Content="选择段落" IsChecked="{Binding Path=ReferenceTarget, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static model:ReferenceType.CurrentParagraph}}" />
+      <RadioButton
+        Margin="20,0"
+        Content="全文"
+        IsChecked="{Binding Path=ReferenceTarget, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static model:ReferenceType.FullText}}" />
+    </StackPanel>
+    <TextBlock
+      Grid.Row="5"
+      Margin="0,5"
+      Text="### 信息（问题、主题或补充说明）" />
+    <TextBox
+      Grid.Row="6"
+      MinHeight="60"
+      VerticalAlignment="Stretch"
+      VerticalContentAlignment="Top"
+      AcceptsReturn="True"
+      Text="{Binding OtherInfo, UpdateSourceTrigger=PropertyChanged}"
+      VerticalScrollBarVisibility="Auto" />
+    <StackPanel
+      Grid.Row="7"
+      Margin="0,10,0,0"
+      Orientation="Horizontal">
+      <TextBlock VerticalAlignment="Center" Text="整合预览" />
+      <CheckBox
+        Margin="20,5"
+        Content="展开$$$###"
+        IsChecked="{Binding IsExpandCombineResult}"
+        Style="{StaticResource ToggleButtonSwitch.Small}" />
+    </StackPanel>
+    <TextBox
+      Grid.Row="8"
+      MinHeight="120"
+      VerticalAlignment="Stretch"
+      VerticalContentAlignment="Top"
+      AcceptsReturn="True"
+      Text="{Binding CombineResultShowing, Mode=OneWay}"
+      TextWrapping="Wrap"
+      VerticalScrollBarVisibility="Auto" />
+    <StackPanel
+      Grid.Row="9"
+      Margin="0,5,0,0"
+      HorizontalAlignment="Right"
+      Orientation="Horizontal">
+      <Button
+        Command="{Binding CopyToClipboardCommand}"
+        CommandParameter="{Binding ElementName=EditWindow}"
+        Content="剪贴板" />
+      <Button
+        Margin="8,0"
+        Command="{Binding CopyToWebPageCommand}"
+        CommandParameter="{Binding ElementName=EditWindow}"
+        Content="对话框" />
+      <Button
+        Command="{Binding StartApiRequestCommand}"
+        CommandParameter="{Binding ElementName=EditWindow}"
+        Content="API请求" />
+    </StackPanel>
+  </Grid>
+</UserControl>

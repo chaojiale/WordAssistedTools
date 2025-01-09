@@ -1,0 +1,490 @@
+﻿<Project ToolsVersion="17.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--
+    This section defines project-level properties.
+
+    AssemblyName
+      Name of the output assembly.
+    Configuration
+      Specifies a default value for debug.
+    OutputType
+      Must be "Library" for VSTO.
+    Platform
+      Specifies what CPU the output of this project can run on.
+    NoStandardLibraries
+      Set to "false" for VSTO.
+    RootNamespace
+      In C#, this specifies the namespace given to new files. In VB, all objects are
+      wrapped in this namespace at runtime.
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <RootNamespace>WordAssistedTools</RootNamespace>
+    <AssemblyName>WordAssistedTools</AssemblyName>
+    <LoadBehavior>3</LoadBehavior>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DefineConstants>VSTO40</DefineConstants>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <PropertyGroup>
+    <!--
+      OfficeApplication
+        Add-in host application
+    -->
+    <OfficeApplication>Word</OfficeApplication>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Debug" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\build\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Release" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\build\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <!--
+    This section specifies references for the project.
+  -->
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Word, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <!--
+    This section defines the user source files that are part of the project.
+     
+    A "Compile" element specifies a source file to compile.
+    An "EmbeddedResource" element specifies an .resx file for embedded resources.
+    A "None" element specifies a file that is not to be passed to the compiler (for instance, 
+    a text file or XML file).
+    The "AppDesigner" element specifies the directory where the application properties files
+    can be found.
+  -->
+  <ItemGroup>
+    <Compile Include="Converters\FullPathToFileNameConverter.cs" />
+    <Compile Include="Converters\LanguageEnumStringToDisplayConverter.cs" />
+    <Compile Include="Models\ITransApiConfigBase.cs" />
+    <Compile Include="Models\TransApiUserConfig.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\GeneralGpt.cs" />
+    <Compile Include="Models\Paths.cs" />
+    <Compile Include="Models\Shared.cs" />
+    <Compile Include="Models\DifferenceType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Methods.cs" />
+    <Compile Include="Utils\JsonTool.cs" />
+    <Compile Include="Utils\ProgressDisposable.cs" />
+    <Compile Include="Utils\ShowMsgBox.cs" />
+    <Compile Include="Utils\TransApiManager.cs" />
+    <Compile Include="Utils\UpdateUtil.cs" />
+    <Compile Include="Utils\WaitDisposable.cs" />
+    <Compile Include="Utils\WordToPptRulesUtils.cs" />
+    <Compile Include="ViewModels\EditListWindowViewModel.cs" />
+    <Compile Include="ViewModels\GptApiRequestViewModel.cs" />
+    <Compile Include="ViewModels\PreAutoPlanViewModel.cs" />
+    <Compile Include="ViewModels\EditRequestInfoViewModel.cs" />
+    <Compile Include="ViewModels\PreExportToPptViewModel.cs" />
+    <Compile Include="ViewModels\GptApiConfigViewModel.cs" />
+    <Compile Include="ViewModels\GptApiItemViewModel.cs" />
+    <Compile Include="ViewModels\ParagraphInfoViewModel.cs" />
+    <Compile Include="ViewModels\NameContentItemViewModel.cs" />
+    <Compile Include="ViewModels\NameContentConfigViewModel.cs" />
+    <Compile Include="ViewModels\TransApiConfigViewModel.cs" />
+    <Compile Include="ViewModels\TransApiItemViewModel.cs" />
+    <Compile Include="ViewModels\TransApiRequestViewModel.cs" />
+    <Compile Include="ViewModels\UserSettingsViewModel.cs" />
+    <Compile Include="ViewModels\WordPptCompareViewModel.cs" />
+    <Compile Include="Views\AboutInfo.xaml.cs">
+      <DependentUpon>AboutInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditListWindow.xaml.cs">
+      <DependentUpon>EditListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GptApiRequest.xaml.cs">
+      <DependentUpon>GptApiRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreAutoPlan.xaml.cs">
+      <DependentUpon>PreAutoPlan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\AutoWrapConverter.cs" />
+    <Compile Include="Converters\BoolToOnOffStateConverter.cs" />
+    <Compile Include="Converters\ComparisonConverter.cs" />
+    <Compile Include="Views\CustomDataGrid.cs" />
+    <Compile Include="Converters\DoubleSecondsToTimeStrConverter.cs" />
+    <Compile Include="Views\GptApiConfig.xaml.cs">
+      <DependentUpon>GptApiConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GptTemplateConfig.xaml.cs">
+      <DependentUpon>GptTemplateConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EstimateParaWordCountValidationRule.cs" />
+    <Compile Include="Views\PreExportToPpt.xaml.cs">
+      <DependentUpon>PreExportToPpt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditRequestInfo.xaml.cs">
+      <DependentUpon>EditRequestInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InputBox.cs" />
+    <Compile Include="Views\InputBoxWindow.xaml.cs">
+      <DependentUpon>InputBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransApiConfig.xaml.cs">
+      <DependentUpon>TransApiConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransApiDevelopGuide.xaml.cs">
+      <DependentUpon>TransApiDevelopGuide.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransApiRequest.xaml.cs">
+      <DependentUpon>TransApiRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WaitWindow.xaml.cs">
+      <DependentUpon>WaitWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainSideBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\MainSideBar.Designer.cs">
+      <DependentUpon>MainSideBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\TrimStringEndConverter.cs" />
+    <Compile Include="Views\UserSettings.xaml.cs">
+      <DependentUpon>UserSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebServiceConfig.xaml.cs">
+      <DependentUpon>WebServiceConfig.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainRibbon.resx">
+      <DependentUpon>MainRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainSideBar.resx">
+      <DependentUpon>MainSideBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="MainRibbon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainRibbon.Designer.cs">
+      <DependentUpon>MainRibbon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThisAddIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Resources\EncourageLib.txt" />
+    <Content Include="Resources\GptApiConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\License.md" />
+    <None Include="Resources\Readme.md" />
+    <Content Include="Resources\image.jpg" />
+    <Content Include="Resources\QuestionTemplates.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\GptWebConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TransWebConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\TransApiConfig.json" />
+    <None Include="Resources\TranslatorDevelopGuide.md" />
+    <None Include="ThisAddIn.Designer.xml">
+      <DependentUpon>ThisAddIn.cs</DependentUpon>
+    </None>
+    <Compile Include="ThisAddIn.Designer.cs">
+      <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+    <None Include="WordAssistedTools_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.PowerPoint">
+      <Guid>{91493440-5A91-11CF-8700-00AA0060263B}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>12</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\AboutInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GptApiRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreAutoPlan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GptApiConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GptTemplateConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreExportToPpt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditRequestInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransApiConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransApiDevelopGuide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransApiRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WaitWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebServiceConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="DiffPlex.Wpf">
+      <Version>1.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="HandyControl">
+      <Version>3.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="Markdig.Wpf">
+      <Version>0.5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Material.Icons.WPF">
+      <Version>2.1.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Web.WebView2">
+      <Version>1.0.2903.40</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.135</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>5.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="OpenAI">
+      <Version>2.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordAssistedTools.SDK\WordAssistedTools.SDK.csproj">
+      <Project>{d63be7ba-cde1-4332-8608-3a90a48bdf80}</Project>
+      <Name>WordAssistedTools.SDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WordAssistedTools_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>198DEC99CA5AC0EBDE5EC6AA2E6BE148A125EC1D</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <!-- Include the build rules for a C# project. -->
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- Include additional build rules for an Office application add-in. -->
+  <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- This section defines VSTO properties that describe the host-changeable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
+        <ProjectProperties HostName="Word" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Word" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Word\InstallRoot\Path#WINWORD.EXE" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
+        <Host Name="Word" GeneratedCodeNamespace="WordAssistedTools" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+        </Host>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

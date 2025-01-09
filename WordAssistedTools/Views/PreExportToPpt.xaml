@@ -1,0 +1,251 @@
+﻿<Window
+  x:Class="WordAssistedTools.Views.PreExportToPpt"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:converters="clr-namespace:WordAssistedTools.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:diffplex="clr-namespace:DiffPlex.Wpf.Controls;assembly=DiffPlex.Wpf"
+  xmlns:hc="https://handyorg.github.io/handycontrol"
+  xmlns:local="clr-namespace:WordAssistedTools.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:models="clr-namespace:WordAssistedTools.Models"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:vm="clr-namespace:WordAssistedTools.ViewModels"
+  Name="ExportWindow"
+  Title="导出至PPT"
+  Width="1100"
+  Height="700"
+  MinWidth="1100"
+  MinHeight="700"
+  d:DataContext="{d:DesignInstance vm:PreExportToPptViewModel,
+                                   IsDesignTimeCreatable=True}"
+  mc:Ignorable="d">
+  <b:Interaction.Triggers>
+    <b:EventTrigger EventName="Loaded">
+      <b:InvokeCommandAction Command="{Binding LoadWindowCommand}" />
+    </b:EventTrigger>
+    <b:EventTrigger EventName="Closing">
+      <b:InvokeCommandAction Command="{Binding WindowClosingCommand}" />
+    </b:EventTrigger>
+  </b:Interaction.Triggers>
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <Style BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+      </Style>
+      <converters:AutoWrapConverter x:Key="AutoWrapConverter" />
+      <converters:TrimStringEndConverter x:Key="TrimStringEndConverter" />
+      <converters:ComparisonConverter x:Key="ComparisonConverter" />
+    </ResourceDictionary>
+  </Window.Resources>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <GroupBox Header="导出信息" Style="{StaticResource GroupBoxOriginal}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="8,0"
+          Text="PPT路径" />
+        <TextBox
+          Grid.Row="0"
+          Grid.Column="1"
+          Margin="10,0"
+          Text="{Binding ExportPptPath}" />
+        <Button
+          Grid.Row="0"
+          Grid.Column="2"
+          Width="80"
+          Command="{Binding BrowsePptPathCommand}"
+          Content="浏览" />
+        <CheckBox
+          Grid.Row="1"
+          Grid.Column="1"
+          Margin="1,5,12,1"
+          HorizontalAlignment="Right"
+          VerticalContentAlignment="Center"
+          Content="浏览后自动加载"
+          IsChecked="{Binding IsAutoLoadPptAfterBrowseChecked}" />
+        <Button
+          Grid.Row="1"
+          Grid.Column="2"
+          Width="80"
+          Margin="1,5,1,1"
+          Command="{Binding LoadPptCommand}"
+          Content="加载备注" />
+      </Grid>
+    </GroupBox>
+    <GroupBox
+      Grid.Row="1"
+      Header="信息比较"
+      Style="{StaticResource GroupBoxOriginal}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="400" />
+          </Grid.ColumnDefinitions>
+          <local:CustomDataGrid
+            Margin="2,5"
+            hc:DataGridAttach.ShowRowNumber="True"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            ItemsSource="{Binding WordPptCompareTable}"
+            RowHeight="{x:Static sys:Double.NaN}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            SelectedItemsList="{Binding SelectedCompares, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Extended"
+            Style="{StaticResource DataGrid.Small}">
+            <b:Interaction.Triggers>
+              <b:EventTrigger EventName="SelectionChanged">
+                <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+              </b:EventTrigger>
+            </b:Interaction.Triggers>
+            <DataGrid.Columns>
+              <DataGridTemplateColumn
+                Width="40"
+                CanUserReorder="False"
+                CanUserResize="False"
+                CanUserSort="False"
+                Header="计入">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <CheckBox
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTextColumn
+                Width="70"
+                Binding="{Binding WordTime}"
+                Header="时间"
+                IsReadOnly="True" />
+              <DataGridTemplateColumn Width="*" Header="Word文档内容">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock
+                      Margin="2,5"
+                      VerticalAlignment="Stretch"
+                      Text="{Binding WordText, Converter={StaticResource TrimStringEndConverter}}"
+                      TextWrapping="Wrap" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTextColumn
+                Width="70"
+                Binding="{Binding PptTime}"
+                Header="时间"
+                IsReadOnly="True" />
+              <DataGridTemplateColumn Width="*" Header="PPT备注内容">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock
+                      Margin="2,5"
+                      VerticalAlignment="Stretch"
+                      Text="{Binding PptText, Converter={StaticResource TrimStringEndConverter}}"
+                      TextWrapping="Wrap" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTextColumn
+                Width="10"
+                Binding="{Binding IsShowDiffer}"
+                Header="是否相同"
+                IsReadOnly="True"
+                Visibility="Hidden" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+              <ContextMenu>
+                <MenuItem Command="{Binding TableMenuSetCheckedCommand}" Header="计入条目" />
+                <MenuItem Command="{Binding TableMenuSetUncheckedCommand}" Header="取消计入条目" />
+              </ContextMenu>
+            </DataGrid.ContextMenu>
+          </local:CustomDataGrid>
+          <diffplex:DiffViewer
+            x:Name="DiffView"
+            Grid.Column="1"
+            Margin="2,5,0,5"
+            BorderBrush="LightGray"
+            BorderThickness="2"
+            NewText="{Binding CompareViewPptText, Converter={StaticResource AutoWrapConverter}}"
+            OldText="{Binding CompareViewWordText, Converter={StaticResource AutoWrapConverter}}" />
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+          <CheckBox
+            Margin="5"
+            Content="全选"
+            IsChecked="{Binding IsSelectAllItemsChecked}" />
+          <CheckBox
+            Margin="20,5,5,5"
+            Command="{Binding ShowDifferenceCommand}"
+            Content="显示差异"
+            IsChecked="{Binding IsShowDifferenceChecked}" />
+          <RadioButton
+            Margin="5"
+            Command="{Binding ShowDifferenceCommand}"
+            Content="仅文本差异"
+            IsChecked="{Binding Path=DifferenceType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static models:DifferenceType.OnlyText}}" />
+          <RadioButton
+            Margin="5"
+            Command="{Binding ShowDifferenceCommand}"
+            Content="文本与时间差异"
+            IsChecked="{Binding Path=DifferenceType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static models:DifferenceType.TimeAndText}}" />
+        </StackPanel>
+      </Grid>
+    </GroupBox>
+    <StackPanel
+      Grid.Row="2"
+      Margin="0,5,0,0"
+      HorizontalAlignment="Right"
+      Orientation="Horizontal">
+      <Button
+        Width="80"
+        Command="{Binding CancelCommand}"
+        CommandParameter="{Binding ElementName=ExportWindow}"
+        Content="取消" />
+      <Button
+        x:Name="ButtonUpdateWordDocument"
+        Width="90"
+        Margin="10,0"
+        Command="{Binding UpdateWordDocumentCommand}"
+        CommandParameter="{Binding ElementName=ExportWindow}"
+        Content="修改Word" />
+      <Button
+        x:Name="ButtonOverwritePpt"
+        Width="80"
+        Command="{Binding OverwritePptCommand}"
+        CommandParameter="{Binding ElementName=ExportWindow}"
+        Content="覆盖PPT" />
+    </StackPanel>
+  </Grid>
+</Window>

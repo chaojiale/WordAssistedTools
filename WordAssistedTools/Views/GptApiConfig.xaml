@@ -1,0 +1,163 @@
+﻿<Window
+  x:Class="WordAssistedTools.Views.GptApiConfig"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:hc="https://handyorg.github.io/handycontrol"
+  xmlns:ic="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+  xmlns:local="clr-namespace:WordAssistedTools.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:WordAssistedTools.ViewModels"
+  Name="ConfigWindow"
+  Title="GPT API设置"
+  Width="1400"
+  Height="600"
+  MinWidth="1400"
+  MinHeight="600"
+  d:DataContext="{d:DesignInstance vm:GptApiConfigViewModel,
+                                   IsDesignTimeCreatable=True}"
+  mc:Ignorable="d">
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+  <b:Interaction.Triggers>
+    <b:EventTrigger EventName="Loaded">
+      <b:InvokeCommandAction Command="{Binding WindowLoadedCommand}" />
+    </b:EventTrigger>
+  </b:Interaction.Triggers>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <TextBlock VerticalAlignment="Center" Text="默认使用：" />
+      <ComboBox
+        Width="150"
+        Margin="10,0"
+        DisplayMemberPath="Name"
+        ItemsSource="{Binding Items}"
+        SelectedItem="{Binding DefaultItem}" />
+    </StackPanel>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="8" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <DataGrid
+        Grid.Column="0"
+        Margin="0,10"
+        hc:DataGridAttach.ShowRowNumber="True"
+        AutoGenerateColumns="False"
+        CanUserAddRows="False"
+        CanUserDeleteRows="False"
+        CanUserReorderColumns="False"
+        CanUserResizeRows="False"
+        CanUserSortColumns="False"
+        ItemsSource="{Binding Items}"
+        RowHeaderWidth="25"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        SelectedItem="{Binding SelectedItem}"
+        SelectionMode="Single">
+        <DataGrid.Columns>
+          <DataGridTextColumn
+            Width="1.2*"
+            Binding="{Binding Name}"
+            Header="名称" />
+          <DataGridTextColumn
+            Width="2*"
+            Binding="{Binding Url}"
+            Header="请求链接" />
+          <DataGridTextColumn
+            Width="3*"
+            Binding="{Binding Key}"
+            Header="密钥" />
+          <DataGridTemplateColumn Width="0.8*" Header="模型列表">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Button
+                  HorizontalAlignment="Left"
+                  Command="{Binding EditModelsCommand}"
+                  Content="编辑" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Width="1.5*" Header="默认模型">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <ComboBox ItemsSource="{Binding Models}" SelectedItem="{Binding DefaultModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTextColumn
+            Width="0.8*"
+            Binding="{Binding LowerTem}"
+            Header="T下×0.1" />
+          <DataGridTextColumn
+            Width="0.8*"
+            Binding="{Binding UpperTem}"
+            Header="T上×0.1" />
+          <DataGridTextColumn
+            Width="0.8*"
+            Binding="{Binding DefaultTem}"
+            Header="T默认×0.1" />
+          <DataGridTextColumn
+            Width="2.5*"
+            Binding="{Binding System}"
+            Header="初始信息" />
+        </DataGrid.Columns>
+      </DataGrid>
+      <StackPanel Grid.Column="2" VerticalAlignment="Center">
+        <Button Margin="0,5" Command="{Binding AddItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="PlaylistAdd" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding DeleteItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="Delete" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding MoveUpItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="ArrowUp" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding MoveDownItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="ArrowDown" />
+          </Button.Content>
+        </Button>
+      </StackPanel>
+    </Grid>
+    <TextBlock Grid.Row="2">
+      填写说明：<LineBreak />
+      名称可任意填写、仅用于显示，但不可重复。后续内容需要注册各大模型平台的API，注册完毕后可查看官方提供的开发指南，上面列举了请求链接、模型列表、可用的温度范围等；<LineBreak />
+      密钥需要在API平台中新建，通常形式为sk-123456……，你可以直接将其填写在表格中，程序也支持从系统环境变量中读取，例如$GPT_KEY将表示获取环境变量GPT_KEY的值，注意环境变量重启生效；<LineBreak />
+      表格中需填写的温度参数是温度上界和下界，以0.1为基数单位，比如API温度范围是0~1，则下界填写0，上届填写10，本插件以1为间隔自动生成中间列表；<LineBreak />
+      默认模型、默认温度分别表示选择该名称的API时使用的默认值，可按需设置，初始信息为提供给大模型的初始Prompt，可保持默认值。</TextBlock>
+    <StackPanel
+      Grid.Row="3"
+      HorizontalAlignment="Right"
+      Orientation="Horizontal">
+      <Button
+        Margin="10,0"
+        Command="{Binding DirectExitCommand}"
+        CommandParameter="{Binding ElementName=ConfigWindow}"
+        Content="放弃所有更改并退出" />
+      <Button
+        Command="{Binding SaveExitCommand}"
+        CommandParameter="{Binding ElementName=ConfigWindow}"
+        Content="保存并退出" />
+    </StackPanel>
+  </Grid>
+</Window>

@@ -1,0 +1,38 @@
+[
+  {
+    "Name": "自由输入",
+    "Content": "###"
+  },
+  {
+    "Name": "回答问题",
+    "Content": "You are a helpful assistant. Context information is below:\r\n$$$\r\n\r\nUsing the provided context information, answer the following question:\r\n###"
+  },
+  {
+    "Name": "文本润色",
+    "Content": "Below is a paragraph from an academic paper. Polish the writing to meet the academic style, improve the spelling, grammar, clarity, concision, and overall readability. When necessary, rewrite the whole sentence. Furthermore, list all modifications and explain the reasons for doing so in a markdown table. \r\n###\r\n\r\nParagraphs:\r\n$$$"
+  },
+  {
+    "Name": "内容创作",
+    "Content": "You are a creative assistant. Based on the theme, the requirements and the reference context (if any), create a comprehensive piece of content. The content should be relevant to the given reference material or theme, and be clear, insightful, and engaging. \r\n\r\nThe theme and the requirements: \r\n###\r\n\r\nThe reference context:\r\n$$$"
+  },
+  {
+    "Name": "文本扩展",
+    "Content": "You are a thoughtful assistant. Context information is below:\r\n$$$\r\n\r\nUsing the provided context information, expand on the text by providing a deeper analysis, additional information, or future trends. The expansion should offer insightful ideas and possibilities that relate to the original content.\r\n###"
+  },
+  {
+    "Name": "概括大意",
+    "Content": "You are a helpful assistant. Context information is below:\r\n$$$\r\n\r\nUsing the provided context information, write a concise summary of the main ideas in the text. Be sure to highlight the key points and provide a clear overview.\r\n###"
+  },
+  {
+    "Name": "中英互译",
+    "Content": "I want you to act as a scientific English-Chinese translator. I will provide you with a paragraph in one language and your task is to accurately and academically translate the paragraph into the other language. Do not repeat the original provided paragraph after translation.\r\n###\r\n\r\nTranslate the following text:\r\n$$$"
+  },
+  {
+    "Name": "提出问题",
+    "Content": "You are a critical reviewer. Context information is below:\r\n$$$\r\n\r\nUsing the provided context information, generate a critical question related to the text. The question should challenge the assumptions, ideas, or methodology presented in the text. \r\n###"
+  },
+  {
+    "Name": "内容降重",
+    "Content": "You are an assistant specialized in content rephrasing. Below is a paragraph from a text. Your task is to rewrite the text in a way that reduces its similarity or duplication, while retaining the original meaning. The rewritten version should be more concise and clear, without altering the key points or ideas.\n###\r\n\nOriginal Text:\n$$$"
+  }
+]

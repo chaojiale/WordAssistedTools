@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "百度",
+    "Content": "https://fanyi.baidu.com/mtpe-individual/multimodal#/"
+  },
+  {
+    "Name": "Google",
+    "Content": "https://translate.google.com/?sl=auto&amp;tl=zh-CN&amp;op=translate"
+  },
+  {
+    "Name": "必应",
+    "Content": "https://www.bing.com/translator"
+  },
+  {
+    "Name": "有道",
+    "Content": "https://fanyi.youdao.com/#/TextTranslate"
+  }
+]

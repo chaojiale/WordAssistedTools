@@ -1,0 +1,152 @@
+﻿<Window
+  x:Class="WordAssistedTools.Views.TransApiConfig"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:converters="clr-namespace:WordAssistedTools.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:hc="https://handyorg.github.io/handycontrol"
+  xmlns:ic="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+  xmlns:local="clr-namespace:WordAssistedTools.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:WordAssistedTools.ViewModels"
+  Name="ConfigWindow"
+  Title="翻译API设置"
+  Width="1200"
+  Height="600"
+  MinWidth="1200"
+  MinHeight="600"
+  d:DataContext="{d:DesignInstance vm:TransApiConfigViewModel,
+                                   IsDesignTimeCreatable=True}"
+  mc:Ignorable="d">
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:FullPathToFileNameConverter x:Key="FullPathToFileNameConverter" />
+    </ResourceDictionary>
+  </Window.Resources>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <TextBlock VerticalAlignment="Center" Text="默认使用：" />
+      <ComboBox
+        Width="150"
+        Margin="10,0"
+        DisplayMemberPath="Name"
+        ItemsSource="{Binding Items}"
+        SelectedItem="{Binding DefaultItem}" />
+    </StackPanel>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="8" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <DataGrid
+        Grid.Column="0"
+        Margin="0,10"
+        hc:DataGridAttach.ShowRowNumber="True"
+        AutoGenerateColumns="False"
+        CanUserAddRows="False"
+        CanUserDeleteRows="False"
+        CanUserReorderColumns="False"
+        CanUserResizeRows="False"
+        CanUserSortColumns="False"
+        ItemsSource="{Binding Items}"
+        RowHeaderWidth="25"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        SelectedItem="{Binding SelectedItem}"
+        SelectionMode="Single">
+        <DataGrid.Columns>
+          <DataGridTextColumn
+            Width="0.8*"
+            Binding="{Binding Name}"
+            Header="名称" />
+          <DataGridTextColumn
+            Width="1.6*"
+            Binding="{Binding DllPath, Mode=OneWay, Converter={StaticResource FullPathToFileNameConverter}}"
+            Header="程序集"
+            IsReadOnly="True" />
+          <DataGridTextColumn
+            Width="1.5*"
+            Binding="{Binding ClassName, Mode=OneWay}"
+            Header="类名"
+            IsReadOnly="True" />
+          <DataGridTextColumn
+            Width="2.8*"
+            Binding="{Binding Url}"
+            Header="请求链接"
+            IsReadOnly="True" />
+          <DataGridTextColumn
+            Width="3*"
+            Binding="{Binding Key}"
+            Header="密钥" />
+          <DataGridTemplateColumn Width="0.8*" Header="帮助">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Button
+                  HorizontalAlignment="Left"
+                  Command="{Binding GetHelpCommand}"
+                  Content="帮助" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+      <StackPanel Grid.Column="2" VerticalAlignment="Center">
+        <Button Margin="0,5" Command="{Binding SeeInFolderCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="Folder" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding RestoreItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="History" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding MoveUpItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="ArrowUp" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding MoveDownItemCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="ArrowDown" />
+          </Button.Content>
+        </Button>
+        <Button Margin="0,5" Command="{Binding ReloadItemsCommand}">
+          <Button.Content>
+            <ic:MaterialIcon Margin="-5,0" Kind="Refresh" />
+          </Button.Content>
+        </Button>
+      </StackPanel>
+    </Grid>
+    <TextBlock Grid.Row="2">
+      填写说明：<LineBreak />
+      名称可任意填写、仅用于显示，但不可重复。密钥需要注册对应平台的翻译API，并请按对应格式填写，可点击恢复默认键恢复初始值；<LineBreak />
+      密钥可以直接将其填写在表格中，程序也支持从系统环境变量中读取，例如$GPT_KEY将表示获取环境变量GPT_KEY的值，注意环境变量重启生效；<LineBreak />
+      程序集、类名、请求链接为本地程序集中读入的翻译API类的信息，不可编辑，如需修改，请联系开发者，点击帮助按钮查看开发者提供的帮助信息。</TextBlock>
+    <StackPanel
+      Grid.Row="3"
+      HorizontalAlignment="Right"
+      Orientation="Horizontal">
+      <Button
+        Margin="10,0"
+        Command="{Binding DirectExitCommand}"
+        CommandParameter="{Binding ElementName=ConfigWindow}"
+        Content="放弃所有更改并退出" />
+      <Button
+        Command="{Binding SaveExitCommand}"
+        CommandParameter="{Binding ElementName=ConfigWindow}"
+        Content="保存并退出" />
+    </StackPanel>
+  </Grid>
+</Window>

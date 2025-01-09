@@ -1,0 +1,46 @@
+[
+    {
+        "Name": "deepseek",
+        "Url": "https://api.deepseek.com",
+        "Models": [
+            "deepseek-chat"
+        ],
+        "DefaultModel": "deepseek-chat",
+        "LowerTem": 0,
+        "UpperTem": 20,
+        "DefaultTem": 3,
+        "Key": "$GPT_DEEPSEEK_KEY",
+        "System": "You are a helpful assistant."
+    },
+    {
+        "Name": "chatanywhere",
+        "Url": "https://api.chatanywhere.tech",
+        "Models": [
+            "gpt-3.5-turbo",
+            "embedding",
+            "gpt-4o-mini",
+            "gpt-4"
+        ],
+        "DefaultModel": "gpt-4o-mini",
+        "LowerTem": 0,
+        "UpperTem": 10,
+        "DefaultTem": 3,
+        "Key": "$GPT_CHATANYWHERE_KEY",
+        "System": "You are a helpful assistant."
+    },
+    {
+        "Name": "Kimi",
+        "Url": "https://api.moonshot.cn/v1",
+        "Models": [
+            "moonshot-v1-8k",
+            "moonshot-v1-32k",
+            "moonshot-v1-128k"
+        ],
+        "DefaultModel": "moonshot-v1-8k",
+        "LowerTem": 0,
+        "UpperTem": 10,
+        "DefaultTem": 3,
+        "Key": "$GPT_KIMI_KEY",
+        "System": "You are a helpful assistant."
+    }
+]

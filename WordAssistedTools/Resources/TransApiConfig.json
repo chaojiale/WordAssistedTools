@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "百度",
+    "ClassFullName": "CommonTranslators.BaiduTranslator",
+    "Key": "$TRANS_BAIDU_KEY"
+  },
+  {
+    "Name": "有道",
+    "ClassFullName": "CommonTranslators.YoudaoTranslator",
+    "Key": "$TRANS_YOUDAO_KEY"
+  }
+]

@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordAssistedTools", "WordAssistedTools\WordAssistedTools.csproj", "{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFE4088A-C2E3-4105-A39D-08E25656114B} = {AFE4088A-C2E3-4105-A39D-08E25656114B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordAssistedTools.SDK", "WordAssistedTools.SDK\WordAssistedTools.SDK.csproj", "{D63BE7BA-CDE1-4332-8608-3A90A48BDF80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTranslators", "CommonTranslators\CommonTranslators.csproj", "{AFE4088A-C2E3-4105-A39D-08E25656114B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectResource", "ProjectResource", "{A61F69D5-177B-48D2-ADF6-B16A2D5A181F}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\License.txt = deploy\License.txt
+		README.md = README.md
+		Deploy\vsto-installer.iss = Deploy\vsto-installer.iss
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F588260-3B2D-4F7F-BDDA-1F0028EBEE06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D63BE7BA-CDE1-4332-8608-3A90A48BDF80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D63BE7BA-CDE1-4332-8608-3A90A48BDF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D63BE7BA-CDE1-4332-8608-3A90A48BDF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D63BE7BA-CDE1-4332-8608-3A90A48BDF80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE4088A-C2E3-4105-A39D-08E25656114B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE4088A-C2E3-4105-A39D-08E25656114B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE4088A-C2E3-4105-A39D-08E25656114B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE4088A-C2E3-4105-A39D-08E25656114B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99E4C02F-B68A-449A-947D-6C89C51C6C17}
+	EndGlobalSection
+EndGlobal

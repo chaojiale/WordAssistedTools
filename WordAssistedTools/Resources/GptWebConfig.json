@@ -1,0 +1,22 @@
+[
+  {
+    "Name": "OpenAI-ChatGPT",
+    "Content": "https://chatgpt.com/"
+  },
+  {
+    "Name": "Microsoft-Copilot",
+    "Content": "https://copilot.microsoft.com/"
+  },
+  {
+    "Name": "Baidu-文心一言",
+    "Content": "https://yiyan.baidu.com/"
+  },
+  {
+    "Name": "MoonShot-Kimi",
+    "Content": "https://kimi.moonshot.cn/"
+  },
+  {
+    "Name": "深度求索-deepseek",
+    "Content": "https://chat.deepseek.com/"
+  }
+]
