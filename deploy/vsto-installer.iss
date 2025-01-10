@@ -187,7 +187,7 @@ PrivilegesRequired=lowest
 
 InternalCompressLevel=normal
 SolidCompression=true
-OutputBaseFilename={#ADDIN_SHORT_NAME}-{#SEMANTIC_VERSION}
+OutputBaseFilename={#ADDIN_SHORT_NAME}-setup-{#SEMANTIC_VERSION}
 
 #ifdef LICENSE_FILE
   LicenseFile={#SETUPFILESDIR}{#LICENSE_FILE}

@@ -16,6 +16,7 @@ namespace WordAssistedTools.Utils;
 
 internal class UpdateUtil {
   public static async Task<UpdateInfo> GetUpdateInfoAsync() {
+    using WaitDisposable wait = new();
     HttpClient client = new() {
       Timeout = TimeSpan.FromSeconds(5)
     };
@@ -32,7 +33,7 @@ internal class UpdateUtil {
 
     foreach (JToken asset in json["assets"]) {
       string assetName = asset["name"]?.ToString();
-      if (!string.IsNullOrEmpty(assetName) && assetName.Contains("setup")) {
+      if (!string.IsNullOrEmpty(assetName) && assetName.Contains("WordAssistedTools-setup")) {
         downloadUrl = asset["browser_download_url"]?.ToString();
         break;
       }
@@ -89,12 +90,12 @@ internal class UpdateUtil {
       int count = 0;
       while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, progress.Window.CancelToken.Token)) > 0) {
         if (progress.Window.CancelToken.Token.IsCancellationRequested) {
-          throw new OperationCanceledException();
+          throw new Exception("操作被取消！");
         }
 
         await fileStream.WriteAsync(buffer, 0, bytesRead, progress.Window.CancelToken.Token);
         count++;
-        progress.Window.SetProgress((int)(count * bufferSize / totalBytes));
+        progress.Window.SetProgress((int)(count * bufferSize * 100 / totalBytes));
       }
 
       progress.Window.SetProgress(100);

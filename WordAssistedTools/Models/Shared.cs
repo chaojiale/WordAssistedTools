@@ -14,7 +14,7 @@ internal static class Shared {
   public static Logger FileLog { get; set; }
 
   public const string BlankUrl = "about:blank";
-  public const string UpdateApiUrl = "https://api.github.com/repos/chaojiale/WordAssistedToolsSolution/releases/latest";
+  public const string UpdateApiUrl = "https://api.github.com/repos/chaojiale/WordAssistedTools/releases/latest";
 
   public static readonly ObservableCollection<double> UpperLimitTimes = [4, 5, 8, 10, 12, 15, 20];
   public static readonly ObservableCollection<double> FinalReservedTimes = [2, 5, 10, 15, 20, 30, 60];

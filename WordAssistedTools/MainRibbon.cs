@@ -14,7 +14,6 @@ using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Web.WebView2.Core;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-
 using WordAssistedTools.Utils;
 using WordAssistedTools.ViewModels;
 using WordAssistedTools.Views;
@@ -28,9 +27,7 @@ using System.Text.RegularExpressions;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using WordAssistedTools.SDK;
 using System.Net;
-using Microsoft.Office.Tools.Word;
 
 
 namespace WordAssistedTools;
@@ -56,7 +53,7 @@ internal partial class MainRibbon {
       groupDev.Visible = false;
 #endif
 #if !ForYearYear
-      sbtEncourageMyself.Visible = false;
+    sbtEncourageMyself.Visible = false;
 #endif
 
     chkUseLocalData.Checked = Sets.UseLocalData;
@@ -295,7 +292,7 @@ internal partial class MainRibbon {
       }
 
       DialogResult res1 = ShowMsgBox.QuestionOkCancel(
-        $"当前版本号为{currentVersion.ToString(2)}，最新版本号为{currentVersion.ToString(2)}；\r\n是否需要立即从{updateInfo.DownloadUrl}下载最新安装包？\r\n点击“确定”开始下载；\r\n点击“取消”放弃操作。");
+        $"当前版本号为{currentVersion.ToString(2)}，最新版本号为{latestVersion.ToString(2)}；\r\n是否需要立即从{updateInfo.DownloadUrl}下载最新安装包？\r\n点击“确定”开始下载；\r\n点击“取消”放弃操作。");
       if (res1 == DialogResult.Cancel) {
         return;
       }
@@ -316,6 +313,9 @@ internal partial class MainRibbon {
         return;
       }
       Process.Start("explorer", $"/e,/select,{filePath}");
+    } catch (OperationCanceledException ex) {
+      ShowMsgBox.Warning("由于连接超时或其他原因，未能获取更新。");
+      FileLog.Error(ex);
     } catch (Exception ex) {
       ShowMsgBox.Error(ex);
       FileLog.Error(ex);

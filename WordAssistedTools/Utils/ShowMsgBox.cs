@@ -17,7 +17,7 @@ namespace WordAssistedTools.Utils {
     /// <param name="ex"></param>
     /// <param name="title"></param>
     public static void Error(Exception ex, string title = AppName) {
-      MessageBox.Show($"出现异常：{ex.Message}，当前操作未能完成。", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      MessageBox.Show($"出现异常：{ex.Message} 当前操作未能完成。", title, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>
