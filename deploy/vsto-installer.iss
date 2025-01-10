@@ -25,10 +25,10 @@
 ; The version number. It is suggested to use the semantic versionin
 ; scheme (http://semver.org), but this is not a must. This version
 ; information may contain text.
-#define SEMANTIC_VERSION "0.4"
+#define SEMANTIC_VERSION "0.5"
 
 ; The version in four-number format
-#define FOUR_NUMBER_VERSION "0.4.0.0"
+#define FOUR_NUMBER_VERSION "0.5.0.0"
 
 ; The year(s) of publication (e.g., "2014-2017")
 #define PUB_YEARS "2025"

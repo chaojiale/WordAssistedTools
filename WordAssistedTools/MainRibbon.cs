@@ -324,7 +324,7 @@ internal partial class MainRibbon {
   }
 
   private void btnSetsAbout_Click(object sender, RibbonControlEventArgs e) {
-    DialogResult result = MessageBox.Show($"推荐平台：Office365\r\n.NET Framework 4.8\r\n插件版本号：V0.4\r\n当前插件的启动路径为：{AppDomain.CurrentDomain.BaseDirectory}。\r\n\r\n点击“确定”查看指南、更新日志与许可信息\r\n点击“取消”关闭窗口\r\n——le~", "关于", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+    DialogResult result = MessageBox.Show($"推荐平台：Office365\r\n.NET Framework 4.8\r\n插件版本号：V0.5\r\n当前插件的启动路径为：{AppDomain.CurrentDomain.BaseDirectory}。\r\n\r\n点击“确定”查看指南、更新日志与许可信息\r\n点击“取消”关闭窗口\r\n——le~", "关于", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
     if (result == DialogResult.OK) {
       AboutInfo aboutInfo = new();
