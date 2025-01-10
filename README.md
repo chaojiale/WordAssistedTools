@@ -12,6 +12,6 @@
 本项目只提供安装包的主要代码，修改自[VstoAddinInstaller](https://github.com/bovender/VstoAddinInstaller)。如需了解安装包详细事宜，请参阅其仓库。  
 简单来说，如果你想自己构建安装包，你需要下载`InnoSetup Download Plugin`，并将安装后的`source`目录拷贝到本项目的`deploy`文件夹中，并重命名为`InnoDownloadPlugin`。  
 
-——le~
+——le~  
 由于时间有限，目前版本没有详细测试所有功能，欢迎反馈bug。  
 希望这对你有用:)

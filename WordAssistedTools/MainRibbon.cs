@@ -825,7 +825,7 @@ internal partial class MainRibbon {
         GeneralGpt chatClient = new();
         result = await chatClient.GetResponseAsync("请写一段话鼓励一下现在的我，让我在后面的Presentation中充满信心，请你用“小栗子同学”来称呼我。");
       } catch (Exception ex) {
-        ShowMsgBox.Error("对不起，操作时间过长，未能取得响应，请检查网络连接。(TAT)");
+        ShowMsgBox.Error("对不起，由于未知的原因，未能取得响应，请检查网络连接。(TAT)");
         FileLog.Error(ex);
         return;
       } finally {
